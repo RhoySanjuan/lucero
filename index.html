@@ -1,0 +1,288 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>❤️ LUCERO ❤️</title>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+      }
+
+      .start-button {
+        padding: 20px 40px;
+        font-size: 24px;
+        background: #ff3366;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
+        position: relative;
+        z-index: 100;
+      }
+
+      .start-button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 30px rgba(255, 51, 102, 0.8);
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .message {
+        position: absolute;
+        color: white;
+        font-size: 2em;
+        text-align: center;
+        opacity: 0;
+        transition: opacity 1s;
+        text-shadow: 0 0 10px rgba(255, 51, 102, 0.8);
+      }
+
+      .heart {
+        position: absolute;
+        font-size: 30px;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .firework {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        animation: explode 1s forwards;
+      }
+
+      @keyframes explode {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(30);
+          opacity: 0;
+        }
+      }
+
+      .final-message {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 20px;
+        max-width: 600px;
+        text-align: center;
+        opacity: 0;
+        transform: scale(0.5);
+        transition: all 1s;
+        box-shadow: 0 0 30px rgba(255, 51, 102, 0.5);
+      }
+
+      .final-message h1 {
+        color: #ff3366;
+        margin-bottom: 20px;
+      }
+
+      .final-message p {
+        color: #333;
+        font-size: 1.2em;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .photo-heart {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        clip-path: path(
+          "M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"
+        );
+        opacity: 0;
+        transform: scale(0);
+        transition: all 1s;
+      }
+
+      .light-beam {
+        position: absolute;
+        width: 4px;
+        height: 0;
+        background: rgba(255, 255, 255, 0.6);
+        transform-origin: top;
+        animation: beam 2s forwards;
+      }
+
+      @keyframes beam {
+        0% {
+          height: 0;
+          opacity: 1;
+        }
+        100% {
+          height: 100vh;
+          opacity: 0;
+        }
+      }
+
+      .floating-emoji {
+        position: absolute;
+        font-size: 40px;
+        opacity: 0;
+        animation: float 4s forwards;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <audio autoplay loop>
+      <source src="cancion.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="start-button" onclick="startSurprise()">
+      ❤️ ¿Lista para una sorpresa? ❤️
+    </button>
+
+    <div id="finalMessage" class="final-message hidden">
+      <h1>❤️ ¡Te quiero mi Lucero! ❤️</h1>
+      <p>
+        Nunca creí en el amor ❤️ a primera vista 😍, pero desde el segundo que
+        cruzamos miradas 👀💕, mi mundo 🌎 cambió. No sé qué tienes, pero te
+        volviste mi pensamiento favorito sin apenas conocerte 🌹🥰. Sé que suena
+        loco porque apenas te conozco pero sentí una conexión instantánea
+        contigo que no puedo ignorar 😘😍💖. Me gustas mucho 😍❤️, pero tus
+        besos tienen una ternura que me enamora 😘🥰.
+      </p>
+      <p>Atte: Rhoy 💑</p>
+    </div>
+    <script>
+      const messages = [
+        "Preparando algo especial...",
+        "Para la persona más importante...",
+        "Que llena mi vida de alegria...",
+        "Y hace latir mi corazón...",
+        "Te quiero mucho...",
+      ];
+
+      const audio = new Audio();
+      audio.src = "cancion.mp3";
+      audio.loop = true;
+      audio.volume = 1;
+      audio.muted = false;
+
+      const emojis = ["❤️", "💖", "💝", "💕", "💗", "💓", "💞", "💘", "💌"];
+
+      function createMessage(text, delay) {
+        setTimeout(() => {
+          const msg = document.createElement("div");
+          msg.className = "message";
+          msg.textContent = text;
+          msg.style.top = `${Math.random() * 60 + 20}%`;
+          msg.style.left = `${Math.random() * 60 + 20}%`;
+          document.body.appendChild(msg);
+          setTimeout(() => (msg.style.opacity = 1), 100);
+          setTimeout(() => {
+            msg.style.opacity = 0;
+            setTimeout(() => msg.remove(), 1000);
+          }, 2000);
+        }, delay);
+      }
+
+      function createFirework(x, y) {
+        const colors = ["#ff0", "#f0f", "#0ff", "#ff4", "#4ff"];
+        for (let i = 0; i < 30; i++) {
+          const firework = document.createElement("div");
+          firework.className = "firework";
+          firework.style.left = x + "px";
+          firework.style.top = y + "px";
+          firework.style.backgroundColor =
+            colors[Math.floor(Math.random() * colors.length)];
+          firework.style.transform = `rotate(${Math.random() * 360}deg)`;
+          document.body.appendChild(firework);
+          setTimeout(() => firework.remove(), 1000);
+        }
+      }
+
+      function createLightBeam() {
+        const beam = document.createElement("div");
+        beam.className = "light-beam";
+        beam.style.left = `${Math.random() * 100}%`;
+        document.body.appendChild(beam);
+        setTimeout(() => beam.remove(), 2000);
+      }
+
+      function createFloatingEmoji() {
+        const emoji = document.createElement("div");
+        emoji.className = "floating-emoji";
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.left = `${Math.random() * 100}%`;
+        document.body.appendChild(emoji);
+        setTimeout(() => emoji.remove(), 4000);
+      }
+
+      function startSurprise() {
+        document.querySelector(".start-button").style.display = "none";
+        document.body.style.background =
+          "linear-gradient(45deg, #000000, #1a0010)";
+
+        let delay = 0;
+        messages.forEach((text) => {
+          createMessage(text, delay);
+          delay += 2000;
+        });
+
+        // Efectos de luz
+        const beamInterval = setInterval(createLightBeam, 500);
+        const emojiInterval = setInterval(createFloatingEmoji, 300);
+
+        // Fuegos artificiales aleatorios
+        const fireworkInterval = setInterval(() => {
+          createFirework(
+            Math.random() * window.innerWidth,
+            Math.random() * window.innerHeight,
+          );
+        }, 600);
+
+        // Mostrar mensaje final
+        setTimeout(() => {
+          clearInterval(beamInterval);
+          clearInterval(emojiInterval);
+          clearInterval(fireworkInterval);
+
+          const finalMessage = document.getElementById("finalMessage");
+          finalMessage.classList.remove("hidden");
+          setTimeout(() => {
+            finalMessage.style.opacity = 1;
+            finalMessage.style.transform = "scale(1)";
+          }, 100);
+
+          // Continuar con efectos de fondo
+          setInterval(() => {
+            createFirework(
+              Math.random() * window.innerWidth,
+              Math.random() * window.innerHeight,
+            );
+            createFloatingEmoji();
+          }, 1000);
+        }, delay + 2000);
+      }
+    </script>
+  </body>
+</html>
